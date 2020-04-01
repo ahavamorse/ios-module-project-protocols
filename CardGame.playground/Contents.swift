@@ -126,7 +126,6 @@ extension Deck {
             }
         }
         cards = deckOfCards
-        print(cards)
     }
 }
 //: ## Step 10
@@ -166,8 +165,16 @@ class HighLow: CardGame {
 //: As part of the protocol conformance, implement a method called `play()`. The method should draw 2 cards from the deck, one for player 1 and one for player 2. These cards will then be compared to see which one is higher. The winning player will be printed along with a description of the winning card. Work will need to be done to the `Suit` and `Rank` types above, so see the next couple steps before continuing with this step.
 extension HighLow {
     func play() {
-        var player1Card = deck.drawCard()
-        var player2Card = deck.drawCard()
+        let player1Card = deck.drawCard()
+        let player2Card = deck.drawCard()
+        
+        if player1Card < player2Card {
+            print("Player 2 wins with \(player2Card)")
+        } else if player2Card < player1Card {
+            print("Player 1 wins with \(player1Card)")
+        } else if player1Card == player2Card {
+            print("Round ends in a tie with \(player2Card)")
+        }
     }
 }
 //: ## Step 16
@@ -216,9 +223,7 @@ extension Card: Comparable {
 //: * Ends in a tie, something like, "Round ends in a tie with 3 of clubs."
 //: * Player 1 wins with a higher card, e.g. "Player 1 wins with 8 of hearts."
 //: * Player 2 wins with a higher card, e.g. "Player 2 wins with king of diamonds."
-
-
-
+// Done above
 //: ## Step 20
 //: Create a class called `CardGameTracker` that conforms to the `CardGameDelegate` protocol. Implement the two required functions: `gameDidStart` and `game(player1DidDraw:player2DidDraw)`. Model `gameDidStart` after the same method in the guided project from today. As for the other method, have it print a message like the following:
 //: * "Player 1 drew a 6 of hearts, player 2 drew a jack of spades."
