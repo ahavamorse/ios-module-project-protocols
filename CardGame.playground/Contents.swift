@@ -158,8 +158,8 @@ protocol CardGameDelegate {
 //: ## Step 14
 //: Create a class called `HighLow` that conforms to the `CardGame` protocol. It should have an initialized `Deck` as a property, as well as an optional delegate property of type `CardGameDelegate`.
 class HighLow: CardGame {
-    var deck = Deck()
-    var delegate: CardGameDelegate?
+    let deck = Deck()
+    var delegate: CardGameDelegate? =  nil
 }
 //: ## Step 15
 //: As part of the protocol conformance, implement a method called `play()`. The method should draw 2 cards from the deck, one for player 1 and one for player 2. These cards will then be compared to see which one is higher. The winning player will be printed along with a description of the winning card. Work will need to be done to the `Suit` and `Rank` types above, so see the next couple steps before continuing with this step.
@@ -168,6 +168,8 @@ extension HighLow {
         let player1Card = deck.drawCard()
         let player2Card = deck.drawCard()
         
+        delegate?.gameDidStart(game: self)
+        delegate?.game(player1DidDraw: player1Card, player2DidDraw: player2Card)
         if player1Card < player2Card {
             print("Player 2 wins with \(player2Card)")
         } else if player2Card < player1Card {
@@ -227,9 +229,15 @@ extension Card: Comparable {
 //: ## Step 20
 //: Create a class called `CardGameTracker` that conforms to the `CardGameDelegate` protocol. Implement the two required functions: `gameDidStart` and `game(player1DidDraw:player2DidDraw)`. Model `gameDidStart` after the same method in the guided project from today. As for the other method, have it print a message like the following:
 //: * "Player 1 drew a 6 of hearts, player 2 drew a jack of spades."
-
-
-
+class CardGameTracker: CardGameDelegate {
+    func gameDidStart(game: CardGame) {
+        print("Started a new game of High Low")
+    }
+    
+    func game(player1DidDraw card1: Card, player2DidDraw card2: Card) {
+        print("Player 1 drew a \(card1), player 2 drew a \(card2).")
+    }
+}
 //: Step 21
 //: Time to test all the types you've created. Create an instance of the `HighLow` class. Set the `delegate` property of that object to an instance of `CardGameTracker`. Lastly, call the `play()` method on the game object. It should print out to the console something that looks similar to the following:
 //:
@@ -238,5 +246,8 @@ extension Card: Comparable {
 //: Player 1 drew a 2 of diamonds, player 2 drew a ace of diamonds.
 //: Player 1 wins with 2 of diamonds.
 //: ```
+var myGameOfHighLow = HighLow()
 
+myGameOfHighLow.delegate = CardGameTracker()
 
+myGameOfHighLow.play()
