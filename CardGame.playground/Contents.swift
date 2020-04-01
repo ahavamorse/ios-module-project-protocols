@@ -161,23 +161,37 @@ protocol CardGameDelegate {
 class HighLow: CardGame {
     var deck = Deck()
     var delegate: CardGameDelegate?
-    
 }
 //: ## Step 15
 //: As part of the protocol conformance, implement a method called `play()`. The method should draw 2 cards from the deck, one for player 1 and one for player 2. These cards will then be compared to see which one is higher. The winning player will be printed along with a description of the winning card. Work will need to be done to the `Suit` and `Rank` types above, so see the next couple steps before continuing with this step.
-
-
-
-
+extension HighLow {
+    func play() {
+        var player1Card = deck.drawCard()
+        var player2Card = deck.drawCard()
+    }
+}
 //: ## Step 16
 //: Take a look at the Swift docs for the [Comparable](https://developer.apple.com/documentation/swift/comparable) protocol. In particular, look at the two functions called `<` and `==`.
-
-
-
-
+// Done
 //: ## Step 17
 //: Make the `Rank` type conform to the `Comparable` protocol. Implement the `<` and `==` functions such that they compare the `rawValue` of the `lhs` and `rhs` arguments passed in. This will allow us to compare two rank values with each other and determine whether they are equal, or if not, which one is larger.
-
+extension PlayingCardNumber: Comparable {
+    static func < (lhs: PlayingCardNumber, rhs: PlayingCardNumber) -> Bool {
+        if lhs.rawValue < rhs.rawValue {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    static func == (lhs: PlayingCardNumber, rhs: PlayingCardNumber) -> Bool {
+        if lhs.rawValue == rhs.rawValue {
+            return true
+        } else {
+            return false
+        }
+    }
+}
 
 
 
