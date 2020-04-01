@@ -192,17 +192,25 @@ extension PlayingCardNumber: Comparable {
         }
     }
 }
-
-
-
-
 //: Step 18
 //: Make the `Card` type conform to the `Comparable` protocol. Implement the `<` and `==` methods such that they compare the ranks of the `lhs` and `rhs` arguments passed in. For the `==` method, compare **both** the rank and the suit.
-
-
-
-
-
+extension Card: Comparable {
+    static func < (lhs: Card, rhs: Card) -> Bool {
+        if lhs.number < rhs.number {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        if lhs.number == rhs.number, lhs.suit == lhs.suit {
+            return true
+        } else {
+            return false
+        }
+    }
+}
 //: ## Step 19
 //: Back to the `play()` method. With the above types now conforming to `Comparable`, you can write logic to compare the drawn cards and print out 1 of 3 possible message types:
 //: * Ends in a tie, something like, "Round ends in a tie with 3 of clubs."
