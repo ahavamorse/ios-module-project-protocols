@@ -171,11 +171,13 @@ extension HighLow {
         delegate?.gameDidStart(game: self)
         delegate?.game(player1DidDraw: player1Card, player2DidDraw: player2Card)
         if player1Card < player2Card {
-            print("Player 2 wins with \(player2Card)")
+            print("Player 2 wins with a \(player2Card)")
         } else if player2Card < player1Card {
-            print("Player 1 wins with \(player1Card)")
+            print("Player 1 wins with a \(player1Card)")
         } else if player1Card == player2Card {
-            print("Round ends in a tie with \(player2Card)")
+            print("Round ends in a tie. Both players have a \(player1Card)")
+        } else if player1Card.number == player2Card.number, player1Card != player2Card {
+            print("Round ends in a tie. Both players got \(player1Card.number)s.")
         }
     }
 }
